@@ -22,6 +22,9 @@ model_encoder = LabelEncoder()
 car_data['Brand'] = brand_encoder.fit_transform(car_data['Brand'])
 car_data['Model'] = model_encoder.fit_transform(car_data['Model'])
 
+# One-hot encode 'Fuel_Type' and 'Transmission'
+car_data = pd.get_dummies(car_data, columns=['Fuel_Type', 'Transmission'], drop_first=True)
+
 # Get unique values for brand and model from the dataset
 brands = car_data['Brand'].unique()
 models = car_data['Model'].unique()
@@ -45,11 +48,14 @@ def predict_price(brand, model_input, year, engine_size, fuel_type, transmission
         'Owner_Count': [owner_count]
     })
 
-    # Convert categorical columns to category dtype
-    input_data['Fuel_Type'] = input_data['Fuel_Type'].astype('category')
-    input_data['Transmission'] = input_data['Transmission'].astype('category')
-    
-  
+   # One-hot encode fuel_type and transmission columns (make sure it matches the training data)
+    input_data = pd.get_dummies(input_data, columns=['Fuel_Type', 'Transmission'], drop_first=True)
+
+    # Ensure the feature columns match the training data
+    # Model expects these columns, add any missing ones from the training set (this may depend on your data)
+    missing_columns = set(car_data.columns) - set(input_data.columns)
+    for col in missing_columns:
+        input_data[col] = 0  # Fill missing columns with zeros (or any appropriate default value)
     
     # Make the prediction
     prediction = model.predict(input_data)
