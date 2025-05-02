@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import pickle
 import joblib
+import xgboost as xgb
 from sklearn.preprocessing import LabelEncoder
 
 # Load the trained model (Make sure to replace 'path_to_your_model.pkl' with the actual model file path)
