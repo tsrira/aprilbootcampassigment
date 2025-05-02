@@ -1,10 +1,7 @@
-!pip install xgboost
-
 import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle
-import xgboost as xgb
 
 # Load the model
 with open('xgboost_classification.pkl', 'rb') as f:
