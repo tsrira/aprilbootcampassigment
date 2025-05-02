@@ -4,8 +4,6 @@ import numpy as np
 import pickle
 import xgboost as xgb
 
-pip install xgboost
-
 # Load the model
 with open('xgboost_classification.pkl', 'rb') as f:
     model = pickle.load(f)
