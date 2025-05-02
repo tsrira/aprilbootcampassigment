@@ -66,9 +66,7 @@ doors = st.number_input("Number of Doors", min_value=2, max_value=5, value=4)
 owner_count = st.number_input("Number of Owners", min_value=1, value=1)
 
 # Prediction Button
-if st.button("Predict"):
-    brand = brand_encoder.transform([brand])[0]
-    model_input =  model_encoder.transform([model_input])[0]    
+if st.button("Predict"):   
     if brand and model_input:
         price = predict_price(brand, model_input, year, engine_size, fuel_type, transmission, mileage, doors, owner_count)
         st.success(f"The predicted price of the car is: ₹{price:.2f}")
