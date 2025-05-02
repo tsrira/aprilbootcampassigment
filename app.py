@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 
 # Load the trained model (Make sure to replace 'path_to_your_model.pkl' with the actual model file path)
-model = joblib.load('path_to_your_model.pkl')  # Replace with the actual path to your saved model
+model = joblib.load('xgboost_classification.pkl')  # Replace with the actual path to your saved model
 
 # Function to make predictions
 def predict_price(brand, model_input, year, engine_size, fuel_type, transmission, mileage, doors, owner_count):
