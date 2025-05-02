@@ -70,7 +70,7 @@ if st.button("Predict"):
     brand = brand_encoder.transform([brand])[0]
     model_input =  model_encoder.transform([model_input])[0]    
     if brand and model_input:
-        price = predict_price(brand_encoder.transform(brand, model_input, year, engine_size, fuel_type, transmission, mileage, doors, owner_count)
+        price = predict_price(brand, model_input, year, engine_size, fuel_type, transmission, mileage, doors, owner_count)
         st.success(f"The predicted price of the car is: ₹{price:.2f}")
     else:
         st.error("Please fill in all the required fields")
