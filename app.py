@@ -22,11 +22,6 @@ model_encoder = LabelEncoder()
 car_data['Brand'] = brand_encoder.fit_transform(car_data['Brand'])
 car_data['Model'] = model_encoder.fit_transform(car_data['Model'])
 
-# One-hot encode 'Fuel_Type' and 'Transmission'
-# Here we handle the encoding manually based on user input
-fuel_type_mapping = {'Diesel': [1, 0, 0, 0], 'Petrol': [0, 1, 0, 0], 'Hybrid': [0, 0, 1, 0], 'Electric': [0, 0, 0, 1]}
-transmission_mapping = {'Manual': [1, 0], 'Automatic': [0, 1], 'Semi-Automatic': [0, 0]}
-
 # Get unique values for brand and model from the dataset
 brands = car_data['Brand'].unique()
 models = car_data['Model'].unique()
@@ -38,22 +33,14 @@ def predict_price(brand, model_input, year, engine_size, fuel_type, transmission
     brand_encoded = brand_encoder.transform([brand])[0]
     model_encoded = model_encoder.transform([model_input])[0]
 
-   # One-hot encode fuel_type and transmission using the mapping
-    fuel_type_encoded = fuel_type_mapping.get(fuel_type, [0, 0, 0, 0])  # Default to all zeros if not found
-    transmission_encoded = transmission_mapping.get(transmission, [0, 0])  # Default to all zeros if not found
-    
     # Prepare the input data
     input_data = pd.DataFrame({
         'Brand': [brand_encoded],
         'Model': [model_encoded],
         'Year': [year],
         'Engine_Size': [engine_size],
-        'Fuel_Type_Diesel': [fuel_type_encoded[0]],
-        'Fuel_Type_Petrol': [fuel_type_encoded[1]],
-        'Fuel_Type_Hybrid': [fuel_type_encoded[2]],
-        'Fuel_Type_Electric': [fuel_type_encoded[3]],
-        'Transmission_Manual': [transmission_encoded[0]],
-        'Transmission_Automatic': [transmission_encoded[1]],
+        'Fuel_Type': [fuel_type],
+        'Transmission': [transmission],
         'Mileage': [mileage],
         'Doors': [doors],
         'Owner_Count': [owner_count]
@@ -85,4 +72,3 @@ if st.button("Predict"):
         st.success(f"The predicted price of the car is: ₹{price:.2f}")
     else:
         st.error("Please fill in all the required fields")
-
