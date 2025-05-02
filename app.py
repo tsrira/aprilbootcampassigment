@@ -54,8 +54,8 @@ def predict_price(brand, model_input, year, engine_size, fuel_type, transmission
 st.title("Car Price Prediction")
 
 # Input fields for user
-brand = st.selectbox("Select Car Brand", brands)
-model_input = st.selectbox("Select Car Model", models)
+brand = st.selectbox("Select Car Brand", brand_encoder.classes_)
+model_input = st.selectbox("Select Car Model", model_encoder.classes_)
 
 year = st.number_input("Car Year", min_value=1900, max_value=2023, value=2020)
 engine_size = st.number_input("Engine Size", min_value=0.5, max_value=8.0, value=2.0)
