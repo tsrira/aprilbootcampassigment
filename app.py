@@ -5,10 +5,10 @@ import joblib
 from sklearn.preprocessing import LabelEncoder
 
 # Load the trained model
-model = joblib.load('xgboost_classification.pkl')  # Ensure this points to your model
+model = joblib.load('xgboost_classification.pkl')  # Replace with the actual path to your saved model
 
-# Load the car dataset
-car_data = pd.read_csv('/mnt/data/cars_price.csv')  # Ensure the path to your uploaded CSV is correct
+# Load the new CSV file
+car_data = pd.read_csv('cars_brand_model.csv')  # Path to your uploaded CSV file
 
 # Clean the data (remove leading/trailing whitespaces, handle missing values)
 car_data['Brand'] = car_data['Brand'].str.strip()
@@ -22,9 +22,6 @@ model_encoder = LabelEncoder()
 # Fit encoders (assuming the model was trained with these encoders)
 car_data['Brand'] = brand_encoder.fit_transform(car_data['Brand'])
 car_data['Model'] = model_encoder.fit_transform(car_data['Model'])
-
-# One-hot encode 'Fuel_Type' and 'Transmission'
-car_data = pd.get_dummies(car_data, columns=['Fuel_Type', 'Transmission'], drop_first=True)
 
 # Get unique values for brand and model from the dataset
 brands = car_data['Brand'].unique()
@@ -42,8 +39,8 @@ def predict_price(brand, model_input, year, engine_size, fuel_type, transmission
         'Model': [model_encoded],
         'Year': [year],
         'Engine_Size': [engine_size],
-        'Fuel_Type': [fuel_type],  # Use original Fuel_Type for input
-        'Transmission': [transmission],  # Use original Transmission for input
+        'Fuel_Type': [fuel_type],  # Pass original Fuel_Type for input
+        'Transmission': [transmission],  # Pass original Transmission for input
         'Mileage': [mileage],
         'Doors': [doors],
         'Owner_Count': [owner_count]
