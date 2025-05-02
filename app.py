@@ -3,13 +3,14 @@ import pandas as pd
 import numpy as np
 import pickle
 import xgboost as xgb  # Importing xgboost
+import joblib
 
 # Load the model
-with open('xgboost_classification.pkl', 'rb') as f:
-    model = pickle.load(f)
+#with open('xgboost_classification.pkl', 'rb') as f:
+#    model = pickle.load(f)
 
 # Load the trained model (Make sure to replace 'path_to_your_model.pkl' with the actual model file path)
-# model = joblib.load('xgboost_classification.pkl')  # Replace with the actual path to your saved model
+model = joblib.load('xgboost_classification.pkl')  # Replace with the actual path to your saved model
 
 # Function to make predictions
 def predict_price(brand, model_input, year, engine_size, fuel_type, transmission, mileage, doors, owner_count):
