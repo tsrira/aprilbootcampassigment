@@ -45,9 +45,16 @@ def predict_price(brand, model_input, year, engine_size, fuel_type, transmission
         'Doors': [doors],
         'Owner_Count': [owner_count]
     })
+
+    # Convert categorical columns to category dtype
+    input_data['Fuel_Type'] = input_data['Fuel_Type'].astype('category')
+    input_data['Transmission'] = input_data['Transmission'].astype('category')
+    
+    # Convert input data into DMatrix format with enable_categorical=True
+    dmatrix = xgb.DMatrix(input_data, enable_categorical=True)
     
     # Make the prediction
-    prediction = model.predict(input_data)
+    prediction = model.predict(dmatrix)
     return prediction[0]
 
 # Streamlit UI
