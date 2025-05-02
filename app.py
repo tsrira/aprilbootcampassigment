@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import pickle
 import joblib
+from sklearn.preprocessing import LabelEncoder
 
 # Load the trained model (Make sure to replace 'path_to_your_model.pkl' with the actual model file path)
 model = joblib.load('xgboost_classification.pkl')  # Replace with the actual path to your saved model
@@ -10,16 +11,32 @@ model = joblib.load('xgboost_classification.pkl')  # Replace with the actual pat
 # Load the car dataset
 car_data = pd.read_csv('cars_brand_model.csv')  # Make sure the path to your uploaded CSV is correct
 
+car_data['Brand'] = car_data['Brand'].str.strip()  # Remove leading/trailing whitespace
+car_data['Model'] = car_data['Model'].str.strip()  # Remove leading/trailing whitespace
+car_data = car_data.dropna(subset=['Brand', 'Model'])  # Drop rows with missing Brand or Model
+
+brand_encoder = LabelEncoder()
+model_encoder = LabelEncoder()
+
+# Assuming 'Brand' and 'Model' were encoded during training:
+car_data['Brand'] = brand_encoder.fit_transform(car_data['Brand'])
+car_data['Model'] = model_encoder.fit_transform(car_data['Model'])
+
 # Get unique values for brand and model from the dataset
 brands = car_data['Brand'].unique()
 models = car_data['Model'].unique()
 
+
 # Function to make predictions
 def predict_price(brand, model_input, year, engine_size, fuel_type, transmission, mileage, doors, owner_count):
+
+    brand_encoded = brand_encoder.transform([brand])[0]
+    model_encoded = model_encoder.transform([model_input])[0]
+
     # Prepare the input data
     input_data = pd.DataFrame({
-        'Brand': [brand],
-        'Model': [model_input],
+        'Brand': [brand_encoded],
+        'Model': [model_encoded],
         'Year': [year],
         'Engine_Size': [engine_size],
         'Fuel_Type': [fuel_type],
