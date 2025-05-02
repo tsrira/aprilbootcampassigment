@@ -26,7 +26,6 @@ car_data['Model'] = model_encoder.fit_transform(car_data['Model'])
 brands = car_data['Brand'].unique()
 models = car_data['Model'].unique()
 
-
 # Function to make predictions
 def predict_price(brand, model_input, year, engine_size, fuel_type, transmission, mileage, doors, owner_count):
 
