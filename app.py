@@ -4,12 +4,15 @@ import numpy as np
 import pickle
 import joblib
 
-# Load the model
-#with open('xgboost_classification.pkl', 'rb') as f:
-#    model = pickle.load(f)
-
 # Load the trained model (Make sure to replace 'path_to_your_model.pkl' with the actual model file path)
 model = joblib.load('xgboost_classification.pkl')  # Replace with the actual path to your saved model
+
+# Load the car dataset
+car_data = pd.read_csv('/mnt/data/cars_price.csv')  # Make sure the path to your uploaded CSV is correct
+
+# Get unique values for brand and model from the dataset
+brands = car_data['Brand'].unique()
+models = car_data['Model'].unique()
 
 # Function to make predictions
 def predict_price(brand, model_input, year, engine_size, fuel_type, transmission, mileage, doors, owner_count):
@@ -34,8 +37,9 @@ def predict_price(brand, model_input, year, engine_size, fuel_type, transmission
 st.title("Car Price Prediction")
 
 # Input fields for user
-brand = st.text_input("Car Brand")
-model_input = st.text_input("Car Model")
+brand = st.selectbox("Select Car Brand", brands)
+model_input = st.selectbox("Select Car Model", models)
+
 year = st.number_input("Car Year", min_value=1900, max_value=2023, value=2020)
 engine_size = st.number_input("Engine Size", min_value=0.5, max_value=8.0, value=2.0)
 fuel_type = st.selectbox("Fuel Type", ['Diesel', 'Petrol', 'Hybrid', 'Electric'])
