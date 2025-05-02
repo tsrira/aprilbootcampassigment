@@ -8,7 +8,7 @@ import joblib
 model = joblib.load('xgboost_classification.pkl')  # Replace with the actual path to your saved model
 
 # Load the car dataset
-car_data = pd.read_csv('cars_price.csv')  # Make sure the path to your uploaded CSV is correct
+car_data = pd.read_csv('cars_brand_model.csv')  # Make sure the path to your uploaded CSV is correct
 
 # Get unique values for brand and model from the dataset
 brands = car_data['Brand'].unique()
