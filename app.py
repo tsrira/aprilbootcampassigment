@@ -46,6 +46,7 @@ def predict_price(brand, model_input, year, engine_size, fuel_type, transmission
         'Owner_Count': [owner_count]
     })
     
+    ''''
     # One-hot encode fuel_type and transmission columns (make sure it matches the training data)
     input_data = pd.get_dummies(input_data, columns=['Fuel_Type', 'Transmission'], drop_first=True)
 
@@ -53,7 +54,8 @@ def predict_price(brand, model_input, year, engine_size, fuel_type, transmission
     missing_columns = set(car_data.columns) - set(input_data.columns)
     for col in missing_columns:
         input_data[col] = 0  # Fill missing columns with zeros (or any appropriate default value)
-
+    ''''
+    
     # Make the prediction
     prediction = model.predict(input_data)
     return prediction[0]
