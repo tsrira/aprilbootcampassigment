@@ -48,6 +48,7 @@ def predict_price(brand, model_input, year, engine_size, fuel_type, transmission
     
    # One-hot encode fuel_type and transmission columns (make sure it matches the training data)
    # input_data = pd.get_dummies(input_data, columns=['Fuel_Type', 'Transmission'], drop_first=True)
+    input_data = pd.get_dummies(input_data, columns=['Fuel_Type', 'Transmission'])
 
     # Ensure the feature columns match the training data
     missing_columns = set(car_data.columns) - set(input_data.columns)
