@@ -23,8 +23,8 @@ label_encoder = LabelEncoder()
 # Fit encoders (assuming the model was trained with these encoders)
 car_data['Brand'] = brand_encoder.fit_transform(car_data['Brand'])
 car_data['Model'] = model_encoder.fit_transform(car_data['Model'])
-car_data['Fuel_Type'] = label_encoder.fit_transform(input_data['Fuel_Type'])
-car_data['Transmission'] = label_encoder.fit_transform(input_data['Transmission'])
+car_data['Fuel_Type'] = label_encoder.fit_transform(car_data['Fuel_Type'])
+car_data['Transmission'] = label_encoder.fit_transform(car_data['Transmission'])
 
 # Get unique values for brand and model from the dataset
 brands = car_data['Brand'].unique()
