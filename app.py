@@ -18,10 +18,13 @@ car_data = car_data.dropna(subset=['Brand', 'Model'])  # Drop rows with missing 
 # Initialize LabelEncoders for Brand and Model
 brand_encoder = LabelEncoder()
 model_encoder = LabelEncoder()
+label_encoder = LabelEncoder()
 
 # Fit encoders (assuming the model was trained with these encoders)
 car_data['Brand'] = brand_encoder.fit_transform(car_data['Brand'])
 car_data['Model'] = model_encoder.fit_transform(car_data['Model'])
+car_data['Fuel_Type'] = label_encoder.fit_transform(input_data['Fuel_Type'])
+car_data['Transmission'] = label_encoder.fit_transform(input_data['Transmission'])
 
 # Get unique values for brand and model from the dataset
 brands = car_data['Brand'].unique()
@@ -32,6 +35,9 @@ def predict_price(brand, model_input, year, engine_size, fuel_type, transmission
     # Encode brand and model before passing to the model
     brand_encoded = brand_encoder.transform([brand])[0]
     model_encoded = model_encoder.transform([model_input])[0]
+    fuel_type_encoded = label_encoder.transform([fuel_type])[0]
+    transmission_encoded = label_encoder.transform([transmission])[0]
+    
     
     # Prepare the input data
     input_data = pd.DataFrame({
@@ -39,8 +45,8 @@ def predict_price(brand, model_input, year, engine_size, fuel_type, transmission
         'Model': [model_encoded],
         'Year': [year],
         'Engine_Size': [engine_size],
-        'Fuel_Type': [fuel_type],  # Pass original Fuel_Type for input
-        'Transmission': [transmission],  # Pass original Transmission for input
+        'Fuel_Type': [fuel_type_encoded],  # Pass original Fuel_Type for input
+        'Transmission': [transmission_encoded],  # Pass original Transmission for input
         'Mileage': [mileage],
         'Doors': [doors],
         'Owner_Count': [owner_count]
@@ -48,8 +54,7 @@ def predict_price(brand, model_input, year, engine_size, fuel_type, transmission
     
    # One-hot encode fuel_type and transmission columns (make sure it matches the training data)
    # input_data = pd.get_dummies(input_data, columns=['Fuel_Type', 'Transmission'], drop_first=True)
-    input_data = pd.get_dummies(input_data, columns=['Fuel_Type', 'Transmission'])
-
+    
     # Ensure the feature columns match the training data
     missing_columns = set(car_data.columns) - set(input_data.columns)
     for col in missing_columns:
