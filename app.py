@@ -9,7 +9,7 @@ model = joblib.load('xgboost_classification.pkl')  # Replace with the actual pat
 
 # Load the new CSV file
 car_data = pd.read_csv('cars_brand_model.csv')  # Path to your uploaded CSV file
-fuel_data = pd.read_csv('cars_type_transission') 
+fuel_data = pd.read_csv('cars_type_transission.csv') 
 
 # Clean the data (remove leading/trailing whitespaces, handle missing values)
 car_data['Brand'] = car_data['Brand'].str.strip()
