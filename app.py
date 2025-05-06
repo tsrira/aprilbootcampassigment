@@ -22,13 +22,14 @@ fuel_data['Transmission'] =  fuel_data['Transmission'].str.strip()
 # Initialize LabelEncoders for Brand and Model
 brand_encoder = LabelEncoder()
 model_encoder = LabelEncoder()
-label_encoder = LabelEncoder()
+fuel_type_encoder = LabelEncoder()
+transmission_encoder = LabelEncoder()
 
 # Fit encoders (assuming the model was trained with these encoders)
 car_data['Brand'] = brand_encoder.fit_transform(car_data['Brand'])
 car_data['Model'] = model_encoder.fit_transform(car_data['Model'])
-fuel_data['Fuel_Type'] = label_encoder.fit_transform(fuel_data['Fuel_Type'])
-fuel_data['Transmission'] = label_encoder.fit_transform(fuel_data['Transmission'])
+fuel_data['Fuel_Type'] = fuel_type_encoder.fit_transform(fuel_data['Fuel_Type'])
+fuel_data['Transmission'] = transmission_encoder.fit_transform(fuel_data['Transmission'])
 
 # Get unique values for brand and model from the dataset
 brands = car_data['Brand'].unique()
@@ -41,8 +42,8 @@ def predict_price(brand, model_input, year, engine_size, fuel_type, transmission
     # Encode brand and model before passing to the model
     brand_encoded = brand_encoder.transform([brand])[0]
     model_encoded = model_encoder.transform([model_input])[0]
-    fuel_type_encoded = label_encoder.transform([fuel_type])[0]
-    transmission_encoded = label_encoder.transform([transmission])[0]
+    fuel_type_encoded = fuel_type_encoder.transform([fuel_type])[0]
+    transmission_encoded = transmission_encoder.transform([transmission])[0]
     
     
     # Prepare the input data
