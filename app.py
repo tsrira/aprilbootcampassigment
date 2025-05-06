@@ -85,6 +85,8 @@ mileage = st.number_input("Mileage (in km)", min_value=0, value=50000)
 doors = st.number_input("Number of Doors", min_value=2, max_value=5, value=4)
 owner_count = st.number_input("Number of Owners", min_value=1, value=1)
 
+price = st.number_input('Guessed Price', min_value=0, value=0)
+
 # Prediction Button
 if st.button("Predict"):
     if brand and model_input and fuel_type and transmission:
