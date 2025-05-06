@@ -38,7 +38,7 @@ fuel_types = fuel_data['Fuel_Type'].unique()
 transmissions = fuel_data['Transmission'].unique()
 
 # Function to make predictions
-def predict_price(brand, model_input, year, engine_size, fuel_type, transmission, mileage, doors, owner_count):
+def predict_price(brand, model_input, year, engine_size, fuel_type, transmission, mileage, doors, owner_count,price):
     # Encode brand, model, fuel type, and transmission before passing to the model
     brand_encoded = brand_encoder.transform([brand])[0]
     model_encoded = model_encoder.transform([model_input])[0]
@@ -55,7 +55,8 @@ def predict_price(brand, model_input, year, engine_size, fuel_type, transmission
         'Transmission': [transmission_encoded],  # Use encoded transmission
         'Mileage': [mileage],
         'Doors': [doors],
-        'Owner_Count': [owner_count]
+        'Owner_Count': [owner_count],
+        'Price': [price]
     })
 
     # Ensure the columns are consistent with the trained model
@@ -87,7 +88,7 @@ owner_count = st.number_input("Number of Owners", min_value=1, value=1)
 # Prediction Button
 if st.button("Predict"):
     if brand and model_input and fuel_type and transmission:
-        price = predict_price(brand, model_input, year, engine_size, fuel_type, transmission, mileage, doors, owner_count)
+        price = predict_price(brand, model_input, year, engine_size, fuel_type, transmission, mileage, doors, owner_count,price)
         st.success(f"The predicted price of the car is: ₹{price:.2f}")
     else:
         st.error("Please fill in all the required fields")
